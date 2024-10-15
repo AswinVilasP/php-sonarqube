@@ -1,0 +1,41 @@
+name: PHP CI with SonarQube
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up PHP environment
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'  # You can choose the version of PHP you're using
+          extensions: mbstring, xml, curl, json
+          coverage: none
+          tools: composer
+
+      # Install dependencies using Composer (if any)
+      - name: Install PHP dependencies
+        run: composer install --no-progress --no-suggest
+
+      # Run your PHP tests (optional)
+      # - name: Run PHP Unit Tests
+      #   run: vendor/bin/phpunit --coverage-text
+
+      # Run SonarQube Scanner
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v2.1.0
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
