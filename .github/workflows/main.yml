@@ -23,15 +23,6 @@ jobs:
           php-version: '8.1'  # You can choose the version of PHP you're using
           extensions: mbstring, xml, curl, json
           coverage: none
-          tools: composer
-
-      # Install dependencies using Composer (if any)
-      - name: Install PHP dependencies
-        run: composer install --no-progress --no-suggest
-
-      # Run your PHP tests (optional)
-      # - name: Run PHP Unit Tests
-      #   run: vendor/bin/phpunit --coverage-text
 
       # Run SonarQube Scanner
       - name: SonarQube Scan
