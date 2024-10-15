@@ -20,13 +20,15 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'  # You can choose the version of PHP you're using
+          php-version: '8.1'
           extensions: mbstring, xml, curl, json
           coverage: none
 
-      # Run SonarQube Scanner
+      # Run SonarQube Scanner with debug logging enabled
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+        run: |
+          sonar-scanner -X  # Enabling full debug logging
