@@ -31,4 +31,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
         run: |
-          sonar-scanner -X  # Enabling full debug logging
+          sonar-scanner -X
