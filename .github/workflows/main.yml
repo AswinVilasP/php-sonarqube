@@ -16,7 +16,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Set up PHP environment
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -24,9 +23,13 @@ jobs:
           extensions: mbstring, xml, curl, json
           coverage: none
 
-      # Run SonarQube Scanner with debug logging enabled
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@v2.1.0
         env:
-          SONAR_TOKEN: sqa_802d06225ad29eadf0d5915caf527c31e0f905e7
-          SONAR_HOST_URL: http://54.147.48.57:9000/
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "http://54.147.48.57:9000"  # Replace with your SonarQube URL
+        with:
+          projectBaseDir: .
+          args: >
+            -Dsonar.projectKey=php-app  # Replace with your actual SonarQube project key
+            -Dsonar.sources=.  # Scanning all source files in the current directory
